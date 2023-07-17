@@ -101,8 +101,6 @@ const filterByAll = computed(() => {
   }
 
   return candidates.value.filter((item) => {
-    //trochę łatwiejsze, ale nadal trudne
-    //mała poprawka, żeby wykluczyć id
     for (const [key, value] of Object.entries(item)) {
       if (key !== 'id') {
         if (value?.toString().toLowerCase().startsWith(searchAttribute.value.toLowerCase())) {
@@ -110,44 +108,12 @@ const filterByAll = computed(() => {
         }
       }
     }
-    //to było dosyć trudne
-    // for (const property in item) {
-    //   if (property !== 'id') {
-    //     if (item[property as keyof typeof item]?.toString().startsWith(searchAttribute.value.toLowerCase())) {
-    //       return item
-    //     }
-    //   }
-    // }
-    //
-    //Proste rozwiązanie:
-    // return (
-    //   item.firstName.startsWith(searchAttribute.value) ||
-    //   item.lastName.startsWith(searchAttribute.value) ||
-    //   item.age.toString().startsWith(searchAttribute.value) ||
-    //   item.party?.startsWith(searchAttribute.value) ||
-    //   item.opinionPool?.toString().startsWith(searchAttribute.value)
-    // )
   })
 })
 </script>
 
 <template>
-  <div class="candidates">
-    <div 
-      v-for="(candidate, index) in filterByAll" 
-      :key="candidate.id" 
-      class="candidates__card"
-    >
-      <p>Candidate: {{ index + 1 }}</p>
-      <p>Name: {{ candidate.firstName }} {{ candidate.lastName }}</p>
-      <p>Age: {{ candidate.age }}</p>
-      <p v-if="candidate.party">Party: {{ candidate.party }}</p>
-      <div>
-        Opinion pool: <progress v-if="candidate.opinionPool" max="100" :value="candidate.opinionPool"></progress> 
-        {{ candidate.opinionPool ? `${candidate.opinionPool}%` : 'no data' }}
-      </div>
-    </div>
-  </div>
+
   <div>
     <label for="search"
       >Search by All:
