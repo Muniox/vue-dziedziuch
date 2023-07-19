@@ -1,12 +1,28 @@
 <script setup lang="ts">
-import StarShipList from './StarShipList.vue'
+import StarShipList from './StarShipsList.vue'
+import AppLoader from './AppLoader.vue'
+import { onErrorCaptured, ref } from 'vue'
+import axios, { type AxiosError } from 'axios'
+
+const error = ref<null | AxiosError>(null)
+
+onErrorCaptured((e) => {
+  if (axios.isAxiosError(e)) {
+    error.value = e
+  }
+})
 </script>
 
 <template>
   <div class="container">
-    <Suspense>
+    <div v-if="error" class="error">
+      {{ error.message }}
+    </div>
+    <Suspense v-else>
       <StarShipList />
-      <template #fallback> Loading... </template>
+      <template #fallback>
+        <AppLoader />
+      </template>
     </Suspense>
   </div>
 </template>
@@ -20,5 +36,9 @@ import StarShipList from './StarShipList.vue'
   align-items: center;
   background-color: #000;
   color: #fcd711;
+}
+
+.error {
+  color: #cd3727;
 }
 </style>
