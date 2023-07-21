@@ -2,10 +2,22 @@
 import { ref, type Ref } from 'vue'
 
 const mouseEventArray: Ref<string[]> = ref([])
+const keyEventArray: Ref<{ key: string; type: string }[]> = ref([])
+const isMessageSend: Ref<boolean> = ref(false)
 
 function handleMouseEvent(e: MouseEvent) {
   mouseEventArray.value = [...mouseEventArray.value, e.type]
 }
+
+function handleKeyEvent({ key, type }: KeyboardEvent) {
+  keyEventArray.value = [...keyEventArray.value, { key, type }]
+}
+
+function sendMessage() {
+  isMessageSend.value = true
+}
+
+// warto zapoznać się ze stroną keycode.info
 </script>
 
 <template>
@@ -14,17 +26,39 @@ function handleMouseEvent(e: MouseEvent) {
       class="button"
       @click.once="handleMouseEvent"
       @dblclick.once="handleMouseEvent"
-      @mousedown.once="handleMouseEvent"
-      @mouseup.once="handleMouseEvent"
+      @mousedown.left="handleMouseEvent"
+      @mouseup.middle="handleMouseEvent"
       @mousemove.once="handleMouseEvent"
       @mouseover.once="handleMouseEvent"
       @mouseleave.once="handleMouseEvent"
       @mousewheel.once="handleMouseEvent"
+      @mouseout.once="handleMouseEvent"
+      @contextmenu.prevent="handleMouseEvent"
     >
       Button
     </button>
+    <div class="outer" @click="handleMouseEvent">
+      <div class="inner" @click.stop="handleMouseEvent"></div>
+    </div>
     <ul>
       <li v-for="(event, index) in mouseEventArray" :key="index">{{ event }}</li>
+    </ul>
+    <form class="form" @submit.prevent="sendMessage">
+      <input
+        type="text"
+        placeholder="Type something"
+        class="input"
+        @keypress.space="handleKeyEvent"
+        @keydown.shift.s.exact="handleKeyEvent"
+        @keyup.a="handleKeyEvent"
+      />
+      <button class="button">Submit</button>
+    </form>
+    <p v-show="isMessageSend">Message send</p>
+    <ul>
+      <li v-for="({ key, type }, index) in keyEventArray" :key="index">
+        przycisk: {{ key }} typ: {{ type }}
+      </li>
     </ul>
   </div>
 </template>
