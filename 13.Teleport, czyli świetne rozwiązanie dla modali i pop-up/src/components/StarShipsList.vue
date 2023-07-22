@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { type Starship, type StarshipsResponse } from './types/Starship'
+import { Starship, type StarshipsResponse } from './types/Starship'
 import StarShipItem from './StarShipItem.vue'
 import { type Ref, ref } from 'vue'
 
