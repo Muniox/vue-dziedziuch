@@ -4,13 +4,12 @@ import { defineStore } from 'pinia'
 import { type Ref, ref } from 'vue'
 
 export const usePeopleStore = defineStore('people', () => {
-  const items: Ref<null | People[]> = ref(null)
+  const items: Ref<[] | People[]> = ref([])
 
-  async function getPeople(): Promise<Ref<People[] | null>> {
+  async function getPeople() {
     const response = await axios.get<PeopleResponse>('https://swapi.dev/api/people')
-    items.value = response.data.results
-    return items
+    items.value = await response.data.results
   }
 
-  return { getPeople }
+  return { items, getPeople }
 })
