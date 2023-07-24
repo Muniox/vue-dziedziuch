@@ -2,8 +2,10 @@
 
 <template>
   <div class="app">
-    <header>
-      <h1>Star Wars people list</h1>
+    <header class="header">
+      <router-link :to="{ path: '/' }" class="header__link">
+        <h1>Star Wars people list</h1>
+      </router-link>
     </header>
     <router-view />
   </div>

@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { type Ref, ref } from 'vue'
-import axios from 'axios'
 import SingleItem from '@/components/SingleItem.vue'
-import type { People, PeopleResponse } from '@/types/PeopleResponse'
+import { usePeopleStore } from '../stores/people-store'
 
-const items: Ref<null | People[]> = ref(null)
-
-const response = await axios.get<PeopleResponse>('https://swapi.dev/api/people')
-
-items.value = response.data.results
+const people = usePeopleStore()
+const items = await people.getPeople()
 </script>
 
 <template>
   <section class="list">
-    <div v-for="(item, index) in items" :key="index" class="list__item">
+    <router-link
+      :to="{ name: 'ItemPage', params: { id: index + 1 } }"
+      v-for="(item, index) in items"
+      :key="index"
+      class="list__item"
+    >
       <SingleItem :item="item" />
-    </div>
+    </router-link>
   </section>
 </template>
 
