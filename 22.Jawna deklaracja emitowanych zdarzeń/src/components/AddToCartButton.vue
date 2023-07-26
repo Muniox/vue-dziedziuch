@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import type { Payload } from '../types/EmitPayload'
 
+// const emit = defineEmits<{
+//   'add-item-to-cart': [Payload]
+// }>()
+
+//jawna deklaracja jest nam niepotrzebna ponieważ korzystamy z TypeScript i on nam wszystko waliduje
 const emit = defineEmits<{
-  'add-item-to-cart': [Payload]
+  'add-item-to-cart': []
 }>()
 
 function addItem() {
-  // emit('add-item-to-cart');
+  emit('add-item-to-cart')
   // emit('add-item-to-cart', 3);
 
-  emit('add-item-to-cart', { name: 'product', qty: 2 })
+  // emit('add-item-to-cart', { name: 'product', qty: 2 })
 }
 </script>
 

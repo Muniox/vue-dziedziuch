@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { People } from '@/types/PeopleResponse'
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, toRefs } from 'vue'
 import { usePeopleStore } from '@/stores/people-store'
 
 const props = defineProps<{
