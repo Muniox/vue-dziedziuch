@@ -35,7 +35,16 @@ const { name, email, address } = toRefs(form.value)
   >
     <input name="name" v-model="name" />
     <input name="email" v-model="email" />
-    <address-test v-model="address" />
+    <address-test
+      v-model:street="address.street"
+      @update-street="(payload) => (address.street = payload)"
+      v-model:city="address.city"
+      @update-city="(payload) => (address.city = payload)"
+      v-model:state="address.state"
+      @update-state="(payload) => (address.state = payload)"
+      v-model:zip="address.zip"
+      @update-zip="(payload) => (address.zip = payload)"
+    />
     <button type="submit">OK</button>
   </form>
 </template>

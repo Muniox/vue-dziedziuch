@@ -2,20 +2,20 @@
 import MailingAddress from './AddressForm.vue'
 
 const props = defineProps<{
-  address: {
-    street: string
-    city: string
-    state: string
-    zip: string
-  }
+  street: string
+  city: string
+  state: string
+  zip: string
 }>()
 </script>
 
 <template>
   <div>
     <mailing-address
-      :address="props.address"
-      @input="$emit('update:address', ($event.target as HTMLInputElement).value)"
+      :street="props.street"
+      :city="props.city"
+      :state="props.state"
+      :zip="props.zip"
     />
   </div>
 </template>
