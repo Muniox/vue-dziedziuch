@@ -14,9 +14,20 @@ const emit = defineEmits<{
 }>()
 
 function updateStreet(value: string) {
+  emit('update-street', value)
+}
+
+function updateCity(value: string) {
   emit('update-city', value)
 }
-// ($event.target as HTMLInputElement).value)
+
+function updateState(value: string) {
+  emit('update-state', value)
+}
+
+function updateZip(value: string) {
+  emit('update-zip', value)
+}
 </script>
 
 <template>
@@ -29,17 +40,17 @@ function updateStreet(value: string) {
     <input
       name="city"
       :value="props.city"
-      @input="$emit('update-city', ($event.target as HTMLInputElement).value)"
+      @input="updateCity(($event.target as HTMLInputElement).value)"
     />
     <input
       name="state"
       :value="props.state"
-      @input="$emit('update-state', ($event.target as HTMLInputElement).value)"
+      @input="updateState(($event.target as HTMLInputElement).value)"
     />
     <input
       name="zip"
       :value="props.zip"
-      @input="$emit('update-zip', ($event.target as HTMLInputElement).value)"
+      @input="updateZip(($event.target as HTMLInputElement).value)"
     />
   </div>
 </template>
