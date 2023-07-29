@@ -8,8 +8,14 @@ export const usePeopleStore = defineStore('people', () => {
 
   async function getPeople() {
     const response = await axios.get<PeopleResponse>('https://swapi.dev/api/people')
-    items.value = await response.data.results
+    items.value = response.data.results
+    return items
   }
 
-  return { items, getPeople }
+  async function getPerson(id: string) {
+    const persons = await getPeople()
+    return persons.value[Number(id) - 1]
+  }
+
+  return { items, getPeople, getPerson }
 })
